@@ -1,5 +1,7 @@
 # orpa-nodes [![Build Status](https://travis-ci.org/telligro/orpa-nodes.svg?branch=master)](https://travis-ci.org/telligro/orpa-nodes)
 ## Getting started
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/shivamadhavan/orpa-nodes.svg)](https://greenkeeper.io/)
 Refer to  [orpa-setup](https://github.com/telligro/orpa-setup) project for more details.
 ### Contains the nodes that are part of the OPAL Framework
 
