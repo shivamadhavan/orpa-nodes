@@ -69,6 +69,16 @@ module.exports = function(RED) {
         return pMsg;
     }
 
+    function processStore(node, RED, msg, text) {
+        if (node.storeType === 'msg') {
+            RED.util.setMessageProperty(msg, node.store, text);
+        } else if (node.storeType === 'flow') {
+            node.context().flow.set(node.store, text);
+        } else if (node.storeType === 'global') {
+            node.context().global.set(node.store, text);
+        }
+    }
+
     function saveToFile(node, msg) {
         node.filename = msg.filename || node.filename;
         let data = msg.payload;
@@ -482,13 +492,7 @@ module.exports = function(RED) {
     function getValueNode(node, msg) {
         try {
             msg.element.getAttribute('value').then(function(text) {
-                if (node.storeType === 'msg') {
-                    RED.util.setMessageProperty(msg, node.store, text);
-                } else if (node.storeType === 'flow') {
-                    node.context().flow.set(node.store, text);
-                } else if (node.storeType === 'global') {
-                    node.context().global.set(node.store, text);
-                }
+                processStore(node, RED, msg, text);
                 msg.payload = text;
                 let expected = (node.expected && node.expected != '') ? node.expected : msg.expected;
                 if (expected && expected != '' && expected != text) {
@@ -518,13 +522,7 @@ module.exports = function(RED) {
     function getAttributeNode(node, msg) {
         try {
             msg.element.getAttribute(node.attribute).then(function(text) {
-                if (node.storeType === 'msg') {
-                    RED.util.setMessageProperty(msg, node.store, text);
-                } else if (node.storeType === 'flow') {
-                    node.context().flow.set(node.store, text);
-                } else if (node.storeType === 'global') {
-                    node.context().global.set(node.store, text);
-                }
+                processStore(node, RED, msg, text);
                 msg.payload = text;
                 let expected = (node.expected && node.expected != '') ? node.expected : msg.expected;
                 if (expected && expected != '' && expected != text) {
@@ -554,16 +552,7 @@ module.exports = function(RED) {
         try {
             console.log('getTextNode');
             msg.element.getText().then(function(text) {
-                // console.log('Got Text: %s', text);
-                // console.log(node.store);
-                // console.log(node.storeType);
-                if (node.storeType === 'msg') {
-                    RED.util.setMessageProperty(msg, node.store, text);
-                } else if (node.storeType === 'flow') {
-                    node.context().flow.set(node.store, text);
-                } else if (node.storeType === 'global') {
-                    node.context().global.set(node.store, text);
-                }
+                processStore(node, RED, msg, text);
                 msg.payload = text;
                 let expected = (node.expected && node.expected != '') ? node.expected : msg.expected;
                 if (expected && expected != '' && expected != text) {
