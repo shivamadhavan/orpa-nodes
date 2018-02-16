@@ -480,6 +480,25 @@ module.exports = function(RED) {
     }
 
     /**
+    * processed input data from flow, global or msg context
+    * FIXME: Move this helper to a generic RED.utils like location so that
+    * it can be used across nodes
+    * @function
+    * @param {object} node - node instance.
+    * @param {object} msg - msg object passed as input to this node.
+    * @param {object} contents - data to be stored
+    */
+        function processStore(node, msg, contents) {
+            if (node.storeType === 'msg') {
+                RED.util.setMessageProperty(msg, node.store, contents);
+            } else if (node.storeType === 'flow') {
+                node.context().flow.set(node.store, contents);
+            } else if (node.storeType === 'global') {
+                node.context().global.set(node.store, contents);
+            }
+        }
+
+    /**
     * Processes the Excel/Read write tasks
     * FIXME: Move this helper to a generic RED.utils like location so that
     * it can be used across nodes
@@ -597,14 +616,7 @@ module.exports = function(RED) {
                                 return;
                             }
                         } else {
-                            if (node.storeType === 'msg') {
-                                RED.util.setMessageProperty(msg, node.store, contents);
-                            } else if (node.storeType === 'flow') {
-                                node.context().flow.set(node.store, contents);
-                            } else if (node.storeType === 'global') {
-                                node.context().global.set(node.store, contents);
-                            }
-
+                            processStore(node, msg, contents);
                             msg.payload = contents;
                         }
 
