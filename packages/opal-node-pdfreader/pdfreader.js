@@ -71,6 +71,25 @@ module.exports = function(RED) {
         return pMsg;
     }
 
+    /**
+   * processed input data from flow, global or msg context
+   * FIXME: Move this helper to a generic RED.utils like location so that
+   * it can be used across nodes
+   * @function
+   * @param {object} node - node instance.
+   * @param {object} msg - msg object passed as input to this node.
+   * @param {object} pdfData - data to be stored
+   */
+    function processStore(node, msg, pdfData) {
+        if (node.storeType === 'msg') {
+            RED.util.setMessageProperty(msg, node.store, pdfData);
+        } else if (node.storeType === 'flow') {
+            node.context().flow.set(node.store, pdfData);
+        } else if (node.storeType === 'global') {
+            node.context().global.set(node.store, pdfData);
+        }
+    }
+
     let rows = {}; // indexed by y-position
     let pdfData = {
         pages: [],
@@ -124,13 +143,7 @@ module.exports = function(RED) {
             });
             pdfParser.on('pdfParser_dataReady', (pdfData) => {
                 // fs.writeFile("./pdf_output.json", JSON.stringify(pdfData));
-                if (node.storeType === 'msg') {
-                    RED.util.setMessageProperty(msg, node.store, pdfData);
-                } else if (node.storeType === 'flow') {
-                    node.context().flow.set(node.store, pdfData);
-                } else if (node.storeType === 'global') {
-                    node.context().global.set(node.store, pdfData);
-                }
+                processStore(node, msg, pdfData);
                 msg.payload = pdfData;
                 node.send(msg);
                 return;
@@ -164,13 +177,7 @@ module.exports = function(RED) {
                             pdfData.pages.forEach((page, pageNo) => {
                                 console.log('Page ' + (pageNo + 1) + ':' + page.lines.length);
                             });
-                            if (node.storeType === 'msg') {
-                                RED.util.setMessageProperty(msg, node.store, pdfData);
-                            } else if (node.storeType === 'flow') {
-                                node.context().flow.set(node.store, pdfData);
-                            } else if (node.storeType === 'global') {
-                                node.context().global.set(node.store, pdfData);
-                            }
+                            processStore(node, msg, pdfData);
                             msg.payload = pdfData;
                             node.send(msg);
                         }
