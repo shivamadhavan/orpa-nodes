@@ -20,6 +20,7 @@ node_js:
 #- '9'
 - '8'
 #- '6'
+- '10'
 script: npm install && gulp
 before_install: cd $NODE_FOLDER
 notifications:
