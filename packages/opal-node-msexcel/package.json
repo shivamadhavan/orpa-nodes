@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "check-types": ">=7.3.0",
-    "moment": "^2.19.1",
+    "moment": "^2.19.3",
     "xlsx": "~0.12.0"
   },
   "license": "GPL-3.0",
