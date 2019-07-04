@@ -1,47 +1,51 @@
 {
-	"name": "opal-node-soap",
-	"version": "0.4.2",
-	"description": "SOAP Read/Write nodes for OPAL",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/telligro/opal-nodes.git"
-	},
-	"dependencies": {
-		"check-types": ">=7.3.0",
-		"fs-extra": ">=4.0.2",
-		"is-utf8": ">=0.2.1",
-		"strong-soap": "^1.2.3"
-	},
-	"license": "GPL-3.0",
-	"keywords": [
-		"opal",
-		"webservices",
-		"soap"
-	],
-	"node-red": {
-		"nodes": {
-			"soapprocess": "soapprocess.js"
-		}
-	},
-	"engines": {
-		"node": ">= 6.9.0"
-	},
-	"author": {
-		"name": "Balaraman Kunduvara",
-		"email": "balaraman@gmail.com"
-	},
-	"devDependencies": {
-		"eslint": "^4.11.0",
-		"eslint-config-google": "^0.9.1",
-		"gulp": "^3.9.1",
-		"gulp-eslint": "^4.0.0",
-		"gulp-eslint-threshold": "^0.1.1",
-		"gulp-if": "^2.0.2"
-	},
-	"scripts": {
-		"lint": "gulp lint"
-	},
-	"publishConfig": {
-		"access": "public"
-	}
+  "name": "opal-node-soap",
+  "version": "0.4.2",
+  "description": "SOAP Read/Write nodes for OPAL",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/telligro/opal-nodes.git"
+  },
+  "dependencies": {
+    "check-types": ">=7.3.0",
+    "fs-extra": ">=4.0.2",
+    "is-utf8": ">=0.2.1",
+    "strong-soap": "^1.2.3",
+    "snyk": "^1.189.0"
+  },
+  "license": "GPL-3.0",
+  "keywords": [
+    "opal",
+    "webservices",
+    "soap"
+  ],
+  "node-red": {
+    "nodes": {
+      "soapprocess": "soapprocess.js"
+    }
+  },
+  "engines": {
+    "node": ">= 6.9.0"
+  },
+  "author": {
+    "name": "Balaraman Kunduvara",
+    "email": "balaraman@gmail.com"
+  },
+  "devDependencies": {
+    "eslint": "^4.11.0",
+    "eslint-config-google": "^0.9.1",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^4.0.0",
+    "gulp-eslint-threshold": "^0.1.1",
+    "gulp-if": "^2.0.2"
+  },
+  "scripts": {
+    "lint": "gulp lint",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "snyk": true
 }
