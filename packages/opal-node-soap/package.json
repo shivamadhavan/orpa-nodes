@@ -10,7 +10,7 @@
 		"check-types": ">=7.3.0",
 		"fs-extra": ">=4.0.2",
 		"is-utf8": ">=0.2.1",
-		"strong-soap": "^1.2.3"
+		"strong-soap": "^3.0.0"
 	},
 	"license": "GPL-3.0",
 	"keywords": [
